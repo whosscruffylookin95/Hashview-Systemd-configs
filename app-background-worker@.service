@@ -1,0 +1,16 @@
+[Unit]
+PartOf=app-background-worker.target
+
+[Service]
+User=hashview
+WorkingDirectory=/opt/hashview
+Environment=PORT=%i
+Environment=RACK_ENV=production
+ExecStart=/bin/bash -lc 'QUEUE=* exec rake resque:scheduler'
+Restart=always
+StandardInput=null
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=%n
+KillMode=mixed
+TimeoutStopSec=5
